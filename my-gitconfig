@@ -1,0 +1,42 @@
+[color]
+    ui = true
+[user]
+    email = bright.ma@coolpad.com
+    name = Minghui Ma
+[core]
+    editor = vim
+    autocrlf = false
+    whitespace = cr-at-eol
+    hooksPath=/home/mamh/.git/hooks
+[alias]
+    st = status
+    ci = commit -s
+    ca = commit --amend -s
+
+    co = checkout
+
+    cpc = cherry-pick --continue
+    cpa = cherry-pick --abort
+
+    br = branch
+
+    last = log -1 HEAD
+    lo = log --oneline
+    ll = log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(red)%s%C(reset) %C(bold black)— %an%C(reset)%C(bold green)%d%C(reset) - %C(bold green)(%ar)%C(reset)' --abbrev-commit --date=relative --show-signature 
+    lc = log --left-right --cherry-pick --date=short --pretty='%m || %h ||  %s (%an %ae) (%cd)'
+
+    sh = stash
+    shl = stash list
+
+    ri = rebase -i
+    ra = rebase --abort
+    rc = rebase --continue
+[merge]
+    tool = vimdiff3
+
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-sh.zeusis.com
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-xi.zeusis.com
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-sz.zeusis.com

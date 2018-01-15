@@ -1,0 +1,61 @@
+[core]
+    editor = vim
+[color]
+    ui = true
+[mergetool "vimdiff3"]
+    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[merge]
+    tool = vimdiff3
+[alias]
+    # basic alias
+    st = status
+    commit = commit -s
+    ci = commit -s
+    revert = revert -s
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    cp = cherry-pick
+    unstage = reset
+    uncommit = reset --soft HEAD^
+
+    # Compare two branches
+    compare = "!f() { RED=$(/bin/echo -e \"\\e[31m\"); GREEN=$(/bin/echo -e \"\\e[32m\"); RST=$(/bin/echo -e \"\\e[0m\"); \
+              /bin/echo -e \"${RED}--- $1\\n${GREEN}+++ $2$RST\"; git log --left-right --cherry-pick --oneline --pretty=\"%m %h %C(yellow)%cd%Creset %s %C(bold blue)<%ae>%Creset\" \
+              --date=short $1...$2|perl -ple \"s/^< (\\w+) /$RED- \\1 $RST/; s/^> (\\w+) /$GREEN+ \\1 $RST/\"; }; f"
+
+    # git log shortcuts
+    lg = log --graph --date=short --pretty=format:'%C(yellow)%h %Cgreen%cd%C(bold yellow)%d%Creset %s %C(bold blue)<%ae>%Creset' --abbrev-commit
+    ll = log --graph --date=short --pretty=format:'%C(yellow)%h %Cgreen%cd%C(bold yellow)%d%Creset %s %C(bold blue)<%ae>%Creset' --abbrev-commit --numstat
+    logf = log --pretty=fuller
+    lp = log -p --pretty=fuller
+
+    # git rebase alias
+    ri = rebase --interactive --autosquash
+    rc = rebase --continue
+    rs = rebase --skip
+
+    # other misc alias
+    this = !git init && git add . && git commit -m \"initial commit\"
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+    ignore = "!f() { prefix=${GIT_PREFIX:-.}; for file in \"$@\"; do echo \"$file\" >> $prefix/.gitignore; done; }; f"
+    ignoreunknown = "!if [ \"$GIT_PREFIX\" != \"\" ]; then cd \"$GIT_PREFIX\"; fi; git ls-files --other --exclude-standard | xargs git ignore"
+    bractive = "for-each-ref --sort=-committerdate --format='%1B[32m%(committerdate:iso8601) %1B[34m%(committerdate:relative) %1B[0;m%(refname:short)' refs/heads/"
+    tarball = "!f() { dirname=${PWD##*/}; git archive HEAD --prefix=$dirname/ | gzip > $dirname.tgz; }; f"
+    fixchid = !git show --pretty=\"%s%n%n%b\" -s |sed \"/^Change-Id: /d\" |git ci --amend -F -
+    fixup = "!f() { git commit -m \"fixup! $(git log -1 --format=%s $@)\"; }; f"
+    squash = "!f() { git commit -m \"squash! $(git log -1 --format=%s $@)\"; }; f"
+    showf = show --pretty=fuller
+    cleanall = "!f() { git clean -d -f; git reset --hard; }; f"
+
+    # Git internals
+    type = cat-file -t
+    dump = cat-file -p
+
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-sh.zeusis.com
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-xi.zeusis.com
+[url "ssh://gerrit.zeusis.com"]
+    pushInsteadOf = ssh://gerrit-sz.zeusis.com
